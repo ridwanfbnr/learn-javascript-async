@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Static Method</title>
+</head>
+<body>
+
+    <table>
+        <tbody>
+            <tr>
+                <td>Id :</td>
+                <td id="id"></td>
+            </tr>
+            <tr>
+                <td>Name :</td>
+                <td id="name"></td>
+            </tr>
+            <tr>
+                <td>Price :</td>
+                <td id="price"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script>
+
+        //  Membuat Promise
+        function getProduct(product) {
+            return new Promise(function (resolve, reject) {
+                const ajax = new XMLHttpRequest();
+                ajax.open("GET", `api/${product}.json`);
+                ajax.onload = function () {
+                    if(ajax.status === 200) {
+                        resolve(ajax.responseText);
+                    } else {
+                        reject(`Error Get Product With Response ${ajax.status}`);
+                    };
+                };
+                ajax.send();
+            });
+        }
+
+        //  Promise Static Method
+        const product = Promise.all([
+            getProduct("product1"),
+            getProduct("product2"),
+            getProduct("product3")
+        ]);
+
+        product.then(function (products) {
+            console.info(products);
+        })
+        .catch(function (error) {
+            console.info(error);
+        })
+
+        /*
+            Promise Static Method
+
+        -   Promise juga memiliki beberapa static method
+        -   Promise.all() digunakan untuk mengeksekusi beberapa promise sekaligus dan menunggu
+            semua hasil prmise nya
+        -   Promise.any() digunakan untuk mengeksekusi beberapa promise sekaligus dan mengambil 
+            hasil promise paling cepat
+        -   Dan Lain-Lain
+        -   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#static_methods
+        */
+
+    </script>
+    
+</body>
+</html>

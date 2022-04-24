@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Send File</title>
+</head>
+<body>
+
+    <!-- Web Form -->
+    <h1>REGISTER</h1>
+    
+    <form>
+        <label for=""> Username: 
+            <input type="text" id="username" name="username">
+        </label>
+        <br>
+        <label for=""> Fullname: 
+            <input type="text" id="fullname" name="fullname">
+        </label>
+        <br>
+        <label for="file"> Profile: 
+            <input type="file" id="profile" name="file">
+        </label>
+        <br>
+        <input type="button" id="register" name="register" value="Register">
+    </form>
+
+    <h1 id="respon"></h1>
+
+    <script>
+
+        //  Upload File dengan Ajax
+        function doRegister() {
+            const ajax = new XMLHttpRequest();
+            ajax.open("POST", "https://ajaxform.free.beeceptor.com");
+            ajax.onload = function() {
+                const respon = document.getElementById("respon");
+                respon.innerText = ajax.responseText;
+            }
+            
+            const form = new FormData();
+            form.append("username", document.getElementById("username").value);
+            form.append("fullname", document.getElementById("fullname").value);
+            form.append("file", document.getElementById("profile").files.item(0));
+
+            /*  atau bisa seperti ini
+            const file = document.getElementById("profile").files;
+            const firstFile = file.item(0);
+            form.append("profile", firstFile);
+            */
+
+            ajax.send(form);
+        }
+
+        document.getElementById("register").onclick = doRegister;
+
+        /*
+            Upload File Dengan AJAX
+
+        -   Selain menggunakan JSON, Query Param dan Form kadang kita butuh mengirim file ke Server
+        -   Untuk mengirim file ke Server, kita perlu menggunakan object FormData, lalu kita
+            perlu menambahkan object file ke dalam FormData tersebut
+        -   https://developer.mozilla.org/en-US/docs/Web/API/FormData
+        -   https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+        -   https://developer.mozilla.org/en-US/docs/Web/API/File
+        -   https://developer.mozilla.org/en-US/docs/Web/API/FileList
+        */
+
+    </script>
+    
+</body>
+</html>

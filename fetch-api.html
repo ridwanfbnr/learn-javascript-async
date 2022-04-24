@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API</title>
+</head>
+<body>
+
+    <form>
+        <label for=""> Username: 
+            <input type="text" id="username" name="username">
+        </label>
+        <br>
+        <label for=""> Password: 
+            <input type="password" id="password" name="password">
+        </label>
+        <br>
+        <input type="button" id="login" name="login" value="Login">
+    </form>
+
+    <h1 id="header"></h1>
+
+    <script>
+
+        function doLogin() {
+            //  Membuat Request
+            const myRequest = new Request("https://hookb.in/03V68ezNO8f3J0ooPKDN", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify({
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value
+                })
+            });
+            //  Menggunakan Fetch API
+            //  Promise<Response>
+            const response = fetch(myRequest);
+
+            response
+                .then((response) => response.json())
+                .then(function (json) {
+                    document.getElementById("header").textContent = json.success;
+                })
+                .catch(function (error) {
+                    document.getElementById("header").textContent = error;
+                })
+        }
+
+        document.getElementById("login").onclick = doLogin;
+
+        /*
+            Fetch API tanpa Object Request
+
+            const myRequest = fetch("https://hookb.in/RZaD2lZoqQiNb9zzB7ln", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify({
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value
+                })
+            });
+        */
+
+        /*
+            Fetch API
+            
+        -   Fetch API merupakan fitur baru sebagai alternatif AJAX
+        -   Saat menggunakan AJAX, kita perlu menggunakan Callback untuk menerima response atau
+            data dari server, sedangkan Fetch API sudah menggunakan Promise, sehingga penggunaan
+            Fetch API lebih mudah dibandingkan AJAX
+        -   Hampir semua browser modern sekarang sudah mendukung menggunakan Fetch API
+        -   Apa yang bisa kita lakukan di AJAX, otomatis semuanya bisa kita lakukan juga di 
+            Fetch API
+        -   https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+        */
+
+        /*
+            Request
+
+        -   Saat kita akan mengirim request menggunakan Fetch API, kita perlu membuat
+            Object Request
+        -   Hal ini menjadi lebih rapih kalau kita menggunakan Fetch API, dibandingkan menggunakan
+            AJAX
+        -   Kita bisa membuat object request, lalu kita kirim menggunakan Fetch API
+        -   Dan saat membuat Request, kita bisa menentukan data yang ingin kita kirim
+        -   https://developer.mozilla.org/en-US/docs/Web/API/Request/Request
+        */
+
+        /*
+            Response
+
+        -   Hasil dari Fetch API adalah sebuah Promise
+        -   Promise tersebut berisikan object Response
+        -   Ada banyak property dan method pada object Response
+        -   https://developer.mozilla.org/en-US/docs/Web/API/Response
+        */
+
+    </script>
+    
+</body>
+</html>

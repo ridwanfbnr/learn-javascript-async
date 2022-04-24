@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Send Json</title>
+</head>
+<body>
+
+    <!-- Web Form -->
+    <form action="">
+        <label for=""> Username: 
+            <input type="text" id="username" name="username">
+        </label>
+        <br>
+        <label for=""> Password: 
+            <input type="password" id="password" name="password">
+        </label>
+        <br>
+        <input type="button" id="login" name="login" value="Login">
+    </form>
+
+    <h1 id="respon"></h1>
+
+    <script>
+
+        //  Mengirim data dengan Ajax
+        function doLogin() {
+            const ajax = new XMLHttpRequest();
+            ajax.open("POST", "https://ajaxform.free.beeceptor.com");
+            ajax.onload = function() {
+                const respon = document.getElementById("respon");
+                respon.innerText = ajax.responseText;
+            }
+            ajax.setRequestHeader("Conten-type", "application/json");
+
+            const json = {
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            }
+
+            ajax.send(JSON.stringify(json));
+        }
+
+        document.getElementById("login").onclick = doLogin;
+
+        /*
+            Mengirim Data dengan AJAX
+
+        -   Saat kita menggunakan AJAX, biasanya bukan hanya untuk mengambil data dari server
+        -   Kadang kita juga ingin mengirim data dari Client ke Server, misal kita membaca semua
+            data di Web Form, lalu mengirimkan ke server menggunakan AJAX
+        -   Untuk melakukan ini, kita bisa menambahkan parameter data yang akan kita kirim pada
+            method send() milik XMLHttpRequest
+        -   https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
+        */
+
+    </script>
+    
+</body>
+</html>

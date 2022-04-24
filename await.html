@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Await</title>
+</head>
+<body>
+
+    <script>
+
+        //  Promise<JSON Product>
+        function getProduct() {
+            const requestProduct = new Request("api/product.json", {
+                method: "GET"
+            });
+
+            const response = fetch(requestProduct);
+
+            return response.then((response) => response.json());
+        }
+
+        getProduct()
+            // .then((product) => console.info(product))
+            .then(function (products) {
+                return console.info(products);;
+            })
+
+        
+        //  Promise<String ProductName>
+        function getProductNamePromise() {
+            return new Promise(function (resolve, reject) {
+                getProduct()
+                    .then((product) => resolve(product.name))
+                    .catch((error) => resolve("Product Not Found"));
+            })
+        }
+
+        getProductNamePromise()
+            .then((productName) => console.info(productName))
+
+
+        //  Async Await
+        async function getProductNameAsync() {
+            /*
+            const product = await getProduct();
+            return product.name;
+            */
+            try {
+                const product = await getProduct();
+                return product.name;
+            } catch(error) {
+                return "Product Not Found";
+            }
+        }
+
+        getProductNameAsync()
+            .then((productName) => console.info(productName))
+
+        /*
+            Await
+
+        -   Await digunakan untuk mendapatkan value hasil dari Promise
+        -   Await hanya bisa digunakan dalam Async Function
+        */
+
+        /*
+            Error Handle di Async Await
+
+        -   Saat kita menggunakan Promise, kita bisa menggunakan catch() ketika terjadi error
+        -   Bagaimana pada kasus Async Await
+        -   Pada Async Await, kita bisa menggunakan try catch untuk melakukan penanganan error
+        */
+
+    </script>
+    
+</body>
+</html>
